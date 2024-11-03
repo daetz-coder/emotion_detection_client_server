@@ -1,0 +1,7 @@
+deepface
+Werkzeug
+# already install in deepface
+# Flask
+# opencv-python
+# numpy
+# tqdm
