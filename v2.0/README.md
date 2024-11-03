@@ -1,13 +1,15 @@
 # v2.0
 
-### **Description:**
+
+
+## 一、Description:
 
 Perform lightweight operations locally on Windows, while handling complex computations on the cloud using Linux.
 
 + Clinet： Windows
-+ Server： Unbuntu
++ Server： Ubuntu
 
-## 一、Installation
+## 二、Installation
 
 ```bash
 git clone https://github.com/daetz-coder/emotion_detection_server_local.git
@@ -53,7 +55,7 @@ pip install -r requirements.txt
 **Note:**
 Complete dependencies on the server and their corresponding CUDA versions can be found in `requirements.ipynb`.
 
-## 二、Startup
+## 三、Startup
 
 ### 1、Client
 
@@ -136,3 +138,11 @@ INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:40] "POST /analyze_online HTTP
 100.68.1.119 - - [03/Nov/2024 11:14:41] "POST /analyze_online HTTP/1.1" 200 -
 INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:41] "POST /analyze_online HTTP/1.1" 200 -
 ```
+
+
+
+
+
+## 五、Summary
+
+*This project involves a client-server architecture where lightweight operations are handled locally on a Windows machine (client), and more complex computations are offloaded to a cloud-based Ubuntu server (server). The setup includes cloning the repository, installing necessary dependencies for both client and server, and starting the respective applications. The functionalities supported include image recognition, video recognition, and online recognition, each with corresponding logs demonstrating their operation.*

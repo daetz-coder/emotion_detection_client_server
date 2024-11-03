@@ -5,7 +5,7 @@
 在本地windows 进行轻量化操作，将复杂计算在云端  linux 实现
 
 + Clinet： Windows
-+ Server： Unbuntu
++ Server： Ubuntu
 
 ## 一、安装
 
