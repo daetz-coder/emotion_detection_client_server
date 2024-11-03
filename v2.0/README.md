@@ -1,16 +1,11 @@
 # v2.0
 
-
-
 ### **Description:**
 
 Perform lightweight operations locally on Windows, while handling complex computations on the cloud using Linux.
 
-+ **Clinet： Windows **
-
-+ **Server： Unbuntu **
-
-
++ Clinet： Windows
++ Server： Unbuntu
 
 ## 一、Installation
 
@@ -58,10 +53,6 @@ pip install -r requirements.txt
 **Note:**
 Complete dependencies on the server and their corresponding CUDA versions can be found in `requirements.ipynb`.
 
-
-
-
-
 ## 二、Startup
 
 ### 1、Client
@@ -97,12 +88,6 @@ WARNING: This is a development server. Do not use it in a production deployment.
  * Running on http://192.168.1.103:5000
 Press CTRL+C to quit
 ```
-
-
-
-
-
-
 
 ## 四、Features
 
@@ -151,4 +136,3 @@ INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:40] "POST /analyze_online HTTP
 100.68.1.119 - - [03/Nov/2024 11:14:41] "POST /analyze_online HTTP/1.1" 200 -
 INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:41] "POST /analyze_online HTTP/1.1" 200 -
 ```
-
