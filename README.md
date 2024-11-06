@@ -10,7 +10,7 @@ Perform lightweight operations locally on Windows, while handling complex comput
 ## 二、Installation
 
 ```bash
-git clone https://github.com/daetz-coder/emotion_detection_server_local.git
+git clone https://github.com/daetz-coder/emotion_detection_client_server.git
 ```
 
 ```less

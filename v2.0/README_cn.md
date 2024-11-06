@@ -1,16 +1,18 @@
 # v2.0
 
-## 描述：
+## 一、描述：
 
-在本地windows 进行轻量化操作，将复杂计算在云端  linux 实现
+
+
+该项目是一个实时情绪面部识别，在本地windows 进行轻量化配置，将复杂计算在远程linux 实现
 
 + Clinet： Windows
-+ Server： Ubuntu
++ Server： Ubuntu 
 
-## 一、安装
+## 二、安装
 
 ```bash
-git clone https://github.com/daetz-coder/emotion_detection_server_local.git
+git clone https://github.com/daetz-coder/emotion_detection_client_server.git
 ```
 
 ```less
@@ -40,7 +42,7 @@ pip install -r requirements.txt
 
 服务器上的完整依赖及其cuda版本可见*requirements.ipynb*
 
-## 二、启动
+## 三、启动
 
 ### 1、client
 
@@ -86,7 +88,9 @@ Press CTRL+C to quit
 2024-11-03 11:09:30,495 - INFO - 100.68.1.119 - - [03/Nov/2024 11:09:30] "POST /analyze_image HTTP/1.1" 200 -
 ```
 
-![image-20241103111016930](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202411031110631.png)
+
+
+![](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202411061912861.png)
 
 ### 2、视频识别
 
@@ -95,6 +99,8 @@ Press CTRL+C to quit
 ```bash
 Processing Video:  26%|█████▍               | 77/300 [00:20<01:12,  3.08frame/s]
 ```
+
+<img src="https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202411061919667.png" alt="image-20241106191933419" style="zoom:50%;" />
 
 ### 3、在线识别
 
@@ -118,3 +124,11 @@ INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:40] "POST /analyze_online HTTP
 100.68.1.119 - - [03/Nov/2024 11:14:41] "POST /analyze_online HTTP/1.1" 200 -
 INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:41] "POST /analyze_online HTTP/1.1" 200 -
 ```
+
+
+
+
+
+## 五、总结
+
+该项目涉及一种客户端-服务器架构，其中轻量级操作在Windows机器（客户端）上本地处理，更复杂的计算加载到Ubuntu服务器（服务器）。设置包括克隆存储库、为客户端和服务器安装必要的依赖关系，以及启动相应的应用程序。支持的功能包括图像识别、视频识别和在线识别，每个功能都有相应的日志显示其操作。
