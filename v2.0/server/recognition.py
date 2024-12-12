@@ -72,14 +72,22 @@ def analyze_video(input_path, output_path):
         progress.update(1)  # Update progress immediately after reading the frame
 
         try:
-            result = DeepFace.analyze(frame, actions=['emotion'], enforce_detection=False)
-            if 'region' in result and 'dominant_emotion' in result:
-                face = result['region']
-                x, y, w, h = face['x'], face['y'], face['w'], face['h']
-                dominant_emotion = result['dominant_emotion']
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                cv2.putText(frame, dominant_emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
-            # Continue even if no face or emotion is detected
+            # 将BGR转换为RGB
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+            # 进行情绪分析
+            result = DeepFace.analyze(rgb_frame, actions=['emotion'], enforce_detection=False)
+            
+            # 处理返回结果，兼容单人脸和多人脸情况
+            faces = result if isinstance(result, list) else [result]
+
+            for face_data in faces:
+                if 'region' in face_data and 'dominant_emotion' in face_data:
+                    x, y, w, h = face_data['region']['x'], face_data['region']['y'], face_data['region']['w'], face_data['region']['h']
+                    dominant_emotion = face_data['dominant_emotion']
+                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                    cv2.putText(frame, dominant_emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+            # 如果没有检测到人脸，则不进行任何绘制操作，直接写入即可
         except Exception as e:
             logging.error(f"Error processing frame: {e}")
         
