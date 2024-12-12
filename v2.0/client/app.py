@@ -219,7 +219,7 @@ class RealTimeAnalysis:
 
         # Use ttk style
         self.style = ttk.Style(self.control_window)
-        self.style.theme_use('clam')  # You can choose other themes
+        self.style.theme_use('clam')  # 可选其他主题
 
         # Exit Button
         exit_button = ttk.Button(self.control_window, text="Exit", command=self.stop)
@@ -236,7 +236,6 @@ class RealTimeAnalysis:
         FRAME_RESIZE_WIDTH = 640        # Width of frame sent to server
         FRAME_RESIZE_HEIGHT = 480       # Height of frame sent to server
 
-        # Shared variables and locks
         latest_frame = None
         latest_frame_lock = threading.Lock()
         processed_frame = None
@@ -253,35 +252,51 @@ class RealTimeAnalysis:
 
                 if frame_to_send is not None:
                     try:
-                        # Resize frame to speed up transmission
+                        # Resize frame
                         resized_frame = cv2.resize(frame_to_send, (FRAME_RESIZE_WIDTH, FRAME_RESIZE_HEIGHT))
                         # Encode frame as JPEG
                         _, img_encoded = cv2.imencode('.jpg', resized_frame)
-                        # Send POST request with encoded image
+                        # Send POST request
                         response = session.post(
                             SERVER_URL,
                             files={'frame': img_encoded.tobytes()},
-                            timeout=5  # Set appropriate timeout
+                            timeout=5
                         )
-                        response.raise_for_status()  # Raise exception for HTTP errors
+                        response.raise_for_status()  # HTTP errors
 
-                        # Assume server returns JSON with annotation data
                         result = response.json()
 
-                        # Create a copy of the original frame for annotation
+                        # Annotate frame
                         annotated_frame = frame_to_send.copy()
-
-                        # Draw bounding boxes and labels
                         for annotation in result.get('annotations', []):
                             bbox = annotation.get('bbox', [])
                             label = annotation.get('label', '')
+                            dominant_emotion = annotation.get('dominant_emotion', '')
+                            emotions = annotation.get('emotions', {})
+
                             if len(bbox) == 4:
                                 x, y, w, h = bbox
+                                # Draw bounding box
                                 cv2.rectangle(annotated_frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                                cv2.putText(annotated_frame, label, (x, y - 10),
-                                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
 
-                        # Thread-safe update of processed frame
+                                # 显示标签（如需要）
+                                if label:
+                                    cv2.putText(annotated_frame, label, (x, y - 10),
+                                                cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
+
+                                # 显示dominant emotion在框上方
+                                if dominant_emotion:
+                                    cv2.putText(annotated_frame, dominant_emotion, (x, y - 30),
+                                                cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
+
+                                # 显示详细的情绪分布在框下方
+                                offset = 0
+                                sorted_emotions = sorted(emotions.items(), key=lambda item: item[1], reverse=True)
+                                for emo, score in sorted_emotions:
+                                    cv2.putText(annotated_frame, f"{emo}: {score:.2f}", (x, y + h + 20 + offset),
+                                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (36, 255, 12), 1)
+                                    offset += 20
+
                         with processed_frame_lock:
                             processed_frame = annotated_frame
 
@@ -316,31 +331,25 @@ class RealTimeAnalysis:
                 with latest_frame_lock:
                     latest_frame = frame.copy()
 
-                # Prepare display content
+                # Prepare display
                 with processed_frame_lock:
                     if processed_frame is not None:
-                        # Resize both frames to have the same height
                         height = min(frame.shape[0], processed_frame.shape[0])
                         width = min(frame.shape[1], processed_frame.shape[1])
 
                         original_resized = cv2.resize(frame, (width, height))
                         processed_resized = cv2.resize(processed_frame, (width, height))
 
-                        # Concatenate original and processed frames horizontally
                         combined_frame = np.hstack((original_resized, processed_resized))
                     else:
-                        # If no processed frame yet, display only original frame
                         combined_frame = frame.copy()
 
-                # Display concatenated frame
                 cv2.imshow(DISPLAY_WINDOW_NAME, combined_frame)
 
-                # Exit if 'q' key is pressed
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     self.stop()
                     break
 
-            # Release resources
             cap.release()
             cv2.destroyAllWindows()
 
