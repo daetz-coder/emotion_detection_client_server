@@ -1,3 +1,5 @@
+
+
 # v2.0
 
 ## 一、Description:
@@ -140,3 +142,22 @@ INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:41] "POST /analyze_online HTTP
 ## 五、Summary
 
 *This project involves a client-server architecture where lightweight operations are handled locally on a Windows machine (client), and more complex computations are loaded to a cloud-based Ubuntu server (server). The setup includes cloning the repository, installing necessary dependencies for both client and server, and starting the respective applications. The functionalities supported include image recognition, video recognition, and online recognition, each with corresponding logs demonstrating their operation.*
+
+
+
+# 2024 12/21 新增
+
+
+
+如果仅仅在本地使用，不希望使用服务器，可以直接使用`dev`文件夹的内容
+
+注意：需要使用下述命令安装依赖
+
+```bash
+pip install -r requirements.txt
+```
+
++ [realtime.py](realtime.py)   表示包含平滑处理的实时检测文件
++ [simple.py](simple.py) 表示简单的实时处理文件
++ [simple_age_gender.py](simple_age_gender.py)  表示额外增加了age和gender的实验
+
