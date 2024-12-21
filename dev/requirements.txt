@@ -1,0 +1,11 @@
+deepface
+Werkzeug
+Pillow
+requests
+opencv-python
+numpy
+# already install in deepface
+# Flask
+# opencv-python
+# numpy
+# tqdm
