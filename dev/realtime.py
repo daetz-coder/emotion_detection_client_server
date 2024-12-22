@@ -2,7 +2,7 @@ import cv2
 import logging
 import numpy as np
 from collections import deque
-from deepface import DeepFace
+from EmtionDetection import DeepFace
 
 # 配置日志
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')

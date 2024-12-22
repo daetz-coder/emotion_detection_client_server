@@ -1,6 +1,6 @@
 import cv2
 import logging
-from deepface import DeepFace
+from EmtionDetection import DeepFace
 
 # 配置日志
 logging.basicConfig(
@@ -21,8 +21,8 @@ def main():
         return
 
     # 可选：设置摄像头分辨率
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1024)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
 
     # 初始化分析频率控制
     frame_count = 0
@@ -45,6 +45,7 @@ def main():
                     actions=['emotion'], 
                     enforce_detection=False,
                     detector_backend='opencv'  # 可根据需要更改
+                    # detector_backend='yolov11'  
                 )
 
                 # 如果检测到多张人脸，可以遍历 results
