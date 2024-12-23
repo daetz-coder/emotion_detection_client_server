@@ -1,7 +1,7 @@
 import cv2
 import logging
 from logging.handlers import RotatingFileHandler
-from EmtionDetection import DeepFace
+from EmotionDetection import DeepFace
 
 # 配置日志
 logger = logging.getLogger()

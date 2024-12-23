@@ -1,6 +1,6 @@
 import cv2
 import logging
-from EmtionDetection import DeepFace
+from EmotionDetection import DeepFace
 
 # 配置日志
 logging.basicConfig(

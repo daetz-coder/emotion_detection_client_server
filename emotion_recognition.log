@@ -164,3 +164,206 @@
 2024-12-22 16:55:10,491 - ERROR - 处理帧时出错: Invalid model_name passed - face_detector/yolov11
 2024-12-22 16:55:10,651 - ERROR - 处理帧时出错: Invalid model_name passed - face_detector/yolov11
 2024-12-22 16:55:10,795 - ERROR - 处理帧时出错: Invalid model_name passed - face_detector/yolov11
+2024-12-23 12:56:22,811 - ERROR - 无法打开摄像头
+2024-12-23 12:57:03,502 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 12:57:04,256 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 12:57:04,853 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 12:57:05,360 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 12:57:05,814 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 12:57:06,310 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 12:57:06,768 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 12:57:07,215 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 12:57:07,683 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 12:57:08,149 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 12:57:08,608 - ERROR - 处理帧时出错: name 'os' is not defined
+2024-12-23 13:00:48,088 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:48,694 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:49,292 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:49,821 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:50,398 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:50,918 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:51,492 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:52,027 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:52,631 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:53,239 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:53,788 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:00:54,369 - ERROR - 处理帧时出错: 未找到权重文件：../pth/best_model_class7.h5
+2024-12-23 13:40:36,241 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:36,515 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:36,767 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:36,935 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:37,106 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:37,272 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:37,457 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:37,679 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:37,873 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:38,134 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:38,302 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:38,469 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:38,621 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:38,777 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:38,972 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:39,126 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:39,284 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:39,465 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:39,736 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:39,971 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:40,157 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:40,321 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 13:40:40,494 - ERROR - 处理帧时出错: OpenCV(4.10.0) d:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.simd_helpers.hpp:92: error: (-2:Unspecified error) in function '__cdecl cv::impl::`anonymous-namespace'::CvtHelper<struct cv::impl::`anonymous namespace'::Set<3,4,-1>,struct cv::impl::A0x46dff480::Set<1,-1,-1>,struct cv::impl::A0x46dff480::Set<0,2,5>,4>::CvtHelper(const class cv::_InputArray &,const class cv::_OutputArray &,int)'
+> Invalid number of channels in input image:
+>     'VScn::contains(scn)'
+> where
+>     'scn' is 1
+
+2024-12-23 14:11:50,380 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:50,827 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:51,024 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:51,284 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:51,554 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:51,796 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:52,044 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:52,213 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:52,374 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:52,560 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:52,739 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:53,028 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:53,319 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:53,584 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:53,832 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:54,071 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:54,341 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:54,616 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 14:11:54,895 - ERROR - 处理帧时出错: local variable 'image_batch' referenced before assignment
+2024-12-23 15:05:40,933 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:41,243 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:41,504 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:41,788 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:42,038 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:42,304 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:42,598 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:42,847 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:43,325 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:43,586 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:43,849 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:05:44,105 - ERROR - 处理帧时出错: Input 0 of layer "sequential" is incompatible with the layer: expected shape=(None, 224, 224, 3), found shape=(224, 224, 3)
+2024-12-23 15:31:49,478 - ERROR - 处理帧时出错: module 'keras.api._v2.keras.applications' has no attribute 'ConvNeXtTinyConvNeXtTiny'
+2024-12-23 15:31:50,037 - ERROR - 处理帧时出错: module 'keras.api._v2.keras.applications' has no attribute 'ConvNeXtTinyConvNeXtTiny'
+2024-12-23 15:31:50,310 - ERROR - 处理帧时出错: module 'keras.api._v2.keras.applications' has no attribute 'ConvNeXtTinyConvNeXtTiny'
+2024-12-23 15:31:50,567 - ERROR - 处理帧时出错: module 'keras.api._v2.keras.applications' has no attribute 'ConvNeXtTinyConvNeXtTiny'
+2024-12-23 15:31:50,845 - ERROR - 处理帧时出错: module 'keras.api._v2.keras.applications' has no attribute 'ConvNeXtTinyConvNeXtTiny'
+2024-12-23 15:31:51,097 - ERROR - 处理帧时出错: module 'keras.api._v2.keras.applications' has no attribute 'ConvNeXtTinyConvNeXtTiny'
+2024-12-23 15:31:51,375 - ERROR - 处理帧时出错: module 'keras.api._v2.keras.applications' has no attribute 'ConvNeXtTinyConvNeXtTiny'
+2024-12-23 15:31:51,646 - ERROR - 处理帧时出错: module 'keras.api._v2.keras.applications' has no attribute 'ConvNeXtTinyConvNeXtTiny'
+2024-12-23 15:31:51,868 - ERROR - 处理帧时出错: module 'keras.api._v2.keras.applications' has no attribute 'ConvNeXtTinyConvNeXtTiny'
+2024-12-23 15:31:52,160 - ERROR - 处理帧时出错: module 'keras.api._v2.keras.applications' has no attribute 'ConvNeXtTinyConvNeXtTiny'

@@ -3,7 +3,7 @@ import logging
 import numpy as np
 from tqdm import tqdm
 from collections import deque
-from EmtionDetection import DeepFace
+from EmotionDetection import DeepFace
 
 # 对情绪进行平滑处理的函数
 def smooth_emotions(emotion_queue, current_emotions, queue_size=5):
