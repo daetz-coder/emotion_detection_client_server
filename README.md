@@ -4,6 +4,20 @@
 
 
 
+>完整的代码见：[daetz-coder/emotion_detection_client_server: Real-Time Facial EmotionDetection With Server and Local (github.com)](https://github.com/daetz-coder/emotion_detection_client_server) 或者[emotion_detection_client_server: Real-Time Facial EmotionDetection (gitee.com)](https://gitee.com/daetz_0/emotion_detection_client_server)
+>
+>权重和数据集见：[Release v1.0 · daetz-coder/emotion_detection_client_server (github.com)](https://github.com/daetz-coder/emotion_detection_client_server/releases/tag/model-weight-dataset-upload)
+>
+>框架部分参考了[serengil/deepface: A Lightweight Face Recognition and Facial Attribute Analysis (Age, Gender, Emotion and Race) Library for Python (github.com)](https://github.com/serengil/deepface)
+
+
+
+## 简介
+
+本项目旨在实现实时面部情绪识别。其核心流程首先使用 OpenCV 内置的 Haar 级联分类器进行人脸检测，再通过多种卷积神经网络模型对提取的人脸进行情绪分类识别。项目提供了多种模型架构选择，包括基于灰度图（48×48）、RGB 图像（96×96、224×224）的自定义卷积网络，以及基于预训练的 EfficientNetV2 模型，并在七种情绪（如快乐、愤怒、悲伤、惊讶等）上进行了训练和微调。为弥补现有数据集中亚洲人脸数据较少的问题，项目团队还自行收集了包含亚洲人面部表情的数据集用于进一步优化模型。通过对比不同模型的训练效果、参数规模和运算复杂度，用户可根据实时性要求选用合适的模型。同时，项目开放了完整的代码、训练记录、模型权重及使用说明，使开发者能够方便地在本地或服务器环境中部署和应用这一实时情绪检测系统。尽管该实时面部情绪识别系统在技术上取得了一定进展，但仍存在一些不足之处。首先，由于情绪数据集的标注工作难度较大，现有数据集的质量和多样性有限，这对模型的泛化能力和准确性造成了制约。其次，模型架构选择、参数设置等因素也影响了最终的识别性能，部分模型在特定情绪的区分上表现不足，并存在过拟合现象。面对这些挑战，未来的工作将集中于：扩大和优化标注数据集，特别是引入更多亚洲面孔及多样化表情的数据以丰富训练样本；探索更先进的深度学习模型和优化算法，提高模型的鲁棒性和精确度；以及在模型压缩、加速推理等方面开展研究，以满足实时检测对于速度与准确率的双重要求。这些改进将有助于进一步提升系统在实际应用中的表现。
+
+
+
 ## 一、数据集
 
 ### 1、预训练数据
@@ -14,7 +28,7 @@
 
 
 
-### 2、自行收集的数据集
+### 2、收集的数据集
 
 由于网上常见的数据集大部分的都是欧洲的人脸，对亚洲，国人的人脸比较少，这里我们自己进行收集，用于微调，我们从影视剧、互联网上收集了一个包含七种情感的人脸数据集（亚洲、国人），用于对模型进行微调。由于部分部分表情之间难以区分且是人工标注，数据集质量有待提升，最终包含如下几种类型，一共有882张数据，类型分布如下：
 
@@ -263,6 +277,8 @@ keras_model.summary()
 **完整的代码和运行记录可访问**
 
 [emotion_detection_client_server: Real-Time Facial EmotionDetection - Gitee.com](https://gitee.com/daetz_0/emotion_detection_client_server/tree/main/Tutorial/model)
+
+或者[daetz-coder/emotion_detection_client_server: Real-Time Facial EmotionDetection With Server and Local (github.com)](https://github.com/daetz-coder/emotion_detection_client_server)
 
 + best_model_CNN_GRAY_size48.ipynb
 + best_model_CNN_RGB_size96
@@ -547,6 +563,7 @@ def load_model() -> Sequential:
 
 ```bash
 git clone https://gitee.com/daetz_0/emotion_detection_client_server.git
+# git clone https://github.com/daetz-coder/emotion_detection_client_server.git
 cd emotion_detection_client_server
 pip install -r requirements.txt
 python main.py
