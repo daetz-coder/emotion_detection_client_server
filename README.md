@@ -1,163 +1,571 @@
+# 实时面部情绪识别
+
+说明：本项目重点在于情绪识别，至于人脸检测使用opencv内置的 **Haar 特征级联分类器**（Haar Cascade Classifier）来进行人脸检测
 
 
-# v2.0
 
-## 一、Description:
+## 一、数据集
 
-Perform lightweight operations locally on Windows, while handling complex computations on the cloud using Linux.
+### 1、预训练数据
 
-+ Clinet： Windows
-+ Server： Ubuntu
+[Facial Emotion Recognition Image Dataset (kaggle.com)](https://www.kaggle.com/datasets/sujaykapadnis/emotion-recognition-dataset)
 
-## 二、Installation
+该数据集包含 6 种不同的情绪：快乐、愤怒、悲伤、中立、惊讶等表情。该数据集是通过抓取 Facebook 和 Instagram 等社交网络、抓取 YouTube 视频和已有的 IMDB 和 AffectNet 数据集收集的。
+
+
+
+### 2、自行收集的数据集
+
+由于网上常见的数据集大部分的都是欧洲的人脸，对亚洲，国人的人脸比较少，这里我们自己进行收集，用于微调，我们从影视剧、互联网上收集了一个包含七种情感的人脸数据集（亚洲、国人），用于对模型进行微调。由于部分部分表情之间难以区分且是人工标注，数据集质量有待提升，最终包含如下几种类型，一共有882张数据，类型分布如下：
+
+<img src="https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202412232156895.png" alt="image-20241223215644766" style="zoom: 33%;" />
+
+
+
+
+
+部分数据集展示如下
+
+![image-20241223220034836](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202412232200324.png)
+
+完整的数据集可访问：
+
++ [emotion_detection_client_server_release](https://gitee.com/daetz_0/emotion_detection_client_server/releases)
+
++ https://gitee.com/daetz_0/emotion_detection_client_server/releases/download/model-weight-data-upload/emotion_dataset.zip
+
+
+
+## 二、模型
+
+
+
+### 1、卷积模型（GRAY+size48）
+
+
+
+模型架构如下,使用灰度图 ，并且图像的尺寸是48
+
+```python
+# 定义模型架构
+model = Sequential()
+input_shape = (48, 48, 1)  # 输入图像尺寸
+
+# 1st convolution layer
+model.add(Conv2D(32, (3,3), activation="selu", input_shape=input_shape, padding='same'))
+model.add(BatchNormalization())
+model.add(MaxPool2D(pool_size=(2,2)))
+model.add(Dropout(0.3))
+
+# 2nd convolution layer
+model.add(Conv2D(64, (3,3), activation="selu", padding='same'))
+model.add(BatchNormalization())
+model.add(Conv2D(64, (3,3), activation="selu", padding='same'))
+model.add(BatchNormalization())
+model.add(MaxPool2D(pool_size=(2,2)))
+model.add(Dropout(0.4))
+
+# 3rd convolution layer
+model.add(Conv2D(128, (3,3), activation="selu", padding='same'))
+model.add(BatchNormalization())
+model.add(Conv2D(128, (3,3), activation="selu", padding='same'))
+model.add(BatchNormalization())
+model.add(MaxPool2D(pool_size=(2,2)))
+model.add(Dropout(0.5))
+
+# 4th convolution layer
+model.add(Conv2D(256, (3,3), activation="selu", padding='same'))
+model.add(BatchNormalization())
+model.add(Conv2D(256, (3,3), activation="selu", padding='same'))
+model.add(BatchNormalization())
+model.add(MaxPool2D(pool_size=(2,2)))
+model.add(Dropout(0.6))
+
+# Flatten layer
+model.add(Flatten())
+
+# Fully connected neural networks
+model.add(Dense(128, activation='selu', kernel_regularizer=l2(0.01)))
+model.add(BatchNormalization())
+model.add(Dropout(0.5))
+
+# Output layer with softmax activation
+model.add(Dense(7, activation='softmax'))
+
+# 编译模型
+model.compile(optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+# 打印模型摘要
+model.summary()
+
+```
+
+
+
+
+
+### 2、卷积模型（RGB+size96）
+
+
+
+```python
+model_4 = Sequential()
+
+model_4.add(Conv2D(32, (3,3), activation="selu", input_shape=input_shape))
+model_4.add(BatchNormalization())
+model_4.add(MaxPool2D(pool_size=(2,2)))
+model_4.add(Dropout(0.3))
+
+model_4.add(Conv2D(64, (3,3), activation="selu"))
+model_4.add(BatchNormalization())
+model_4.add(Conv2D(64, (3,3), activation="selu"))
+model_4.add(BatchNormalization())
+model_4.add(MaxPool2D(pool_size=(2,2)))
+model_4.add(Dropout(0.4))
+
+model_4.add(Conv2D(128, (3,3), activation="selu"))
+model_4.add(BatchNormalization())
+model_4.add(Conv2D(128, (3,3), activation="selu"))
+model_4.add(BatchNormalization())
+model_4.add(MaxPool2D(pool_size=(2,2)))
+model_4.add(Dropout(0.5))
+
+model_4.add(Conv2D(256, (3,3), activation="selu"))
+model_4.add(BatchNormalization())
+model_4.add(Conv2D(256, (3,3), activation="selu"))
+model_4.add(BatchNormalization())
+model_4.add(MaxPool2D(pool_size=(2,2)))
+model_4.add(Dropout(0.6))
+
+model_4.add(Flatten())
+model_4.add(Dense(128, activation='selu', kernel_regularizer=l2(0.01)))
+model_4.add(BatchNormalization())
+model_4.add(Dropout(0.5))
+model_4.add(Dense(7, activation='softmax'))
+
+model_4.compile(optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+model_4.summary()
+```
+
+
+
+### 3、卷积模型（RGB+size224）
+
+```python
+# 定义模型架构
+model_4 = Sequential()
+num_classes = 7
+input_shape = (224, 224, 3)  # 输入图像尺寸为224x224，RGB三通道
+
+# 第一组卷积层
+model_4.add(Conv2D(32, (3,3), activation="selu", input_shape=input_shape, padding='same'))
+model_4.add(BatchNormalization())
+model_4.add(MaxPool2D(pool_size=(2,2)))
+model_4.add(Dropout(0.3))
+
+# 第二组卷积层
+model_4.add(Conv2D(64, (3,3), activation="selu", padding='same'))
+model_4.add(BatchNormalization())
+model_4.add(Conv2D(64, (3,3), activation="selu", padding='same'))
+model_4.add(BatchNormalization())
+model_4.add(MaxPool2D(pool_size=(2,2)))
+model_4.add(Dropout(0.4))
+
+# 第三组卷积层
+model_4.add(Conv2D(128, (3,3), activation="selu", padding='same'))
+model_4.add(BatchNormalization())
+model_4.add(Conv2D(128, (3,3), activation="selu", padding='same'))
+model_4.add(BatchNormalization())
+model_4.add(MaxPool2D(pool_size=(2,2)))
+model_4.add(Dropout(0.5))
+
+# 第四组卷积层
+model_4.add(Conv2D(256, (3,3), activation="selu", padding='same'))
+model_4.add(BatchNormalization())
+model_4.add(Conv2D(256, (3,3), activation="selu", padding='same'))
+model_4.add(BatchNormalization())
+model_4.add(MaxPool2D(pool_size=(2,2)))
+model_4.add(Dropout(0.6))
+
+# 第五组卷积层（可选，进一步增加复杂性）
+model_4.add(Conv2D(512, (3,3), activation="selu", padding='same'))
+model_4.add(BatchNormalization())
+model_4.add(Conv2D(512, (3,3), activation="selu", padding='same'))
+model_4.add(BatchNormalization())
+model_4.add(MaxPool2D(pool_size=(2,2)))
+model_4.add(Dropout(0.7))
+
+# Flatten层
+model_4.add(Flatten())
+
+# 全连接层
+model_4.add(Dense(512, activation='selu', kernel_regularizer=l2(0.01)))
+model_4.add(BatchNormalization())
+model_4.add(Dropout(0.5))
+
+model_4.add(Dense(256, activation='selu', kernel_regularizer=l2(0.01)))
+model_4.add(BatchNormalization())
+model_4.add(Dropout(0.5))
+
+# 输出层
+model_4.add(Dense(num_classes, activation="softmax"))
+
+# 编译模型
+model_4.compile(optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+# 打印模型摘要
+model_4.summary()
+
+```
+
+
+
+### 4、EffectiveV2模型（RGB+size224）
+
+这里使用了imagenet的权重，我们进在此基础上进行微调
+
+这里还可以使用Facial Emotion Recognition Image Dataset 用于在人脸情绪方面进行训练，保留权重后再自己收集的数据集上微调(可选)
+
+```python
+# Import the EfficientNetV2M model pre-trained on ImageNet without the top layers
+base_model = tf.keras.applications.ConvNeXtTiny(input_shape=(224, 224, 3), include_top=False, weights='imagenet')
+
+# Freeze the base model layers to prevent them from being trained
+base_model.trainable = True  #Unfreeze Some Layers for Fine-Tuning
+
+fine_tune_at = len(base_model.layers) - 20  
+for layer in base_model.layers[:fine_tune_at]:
+    layer.trainable = False
+
+# Create  model
+keras_model = keras.models.Sequential()
+keras_model.add(base_model)
+keras_model.add(keras.layers.GlobalAveragePooling2D())  # Replace Flatten with GlobalAveragePooling
+keras_model.add(keras.layers.BatchNormalization())  # Add a Batch Normalization Layer
+keras_model.add(keras.layers.Dense(128, activation='relu'))  # Increase the Model Capacity
+keras_model.add(keras.layers.Dropout(0.3))  # Reduce Regularization
+keras_model.add(keras.layers.Dense(7, activation=tf.nn.softmax))  # 6 output units for classification
+
+# Display the model's architecture
+keras_model.summary()
+
+```
+
+
+
+### 5、数据加载区别
+
+![image-20241223221258667](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202412232212800.png)
+
+
+
+**完整的代码和运行记录可访问**
+
+[emotion_detection_client_server: Real-Time Facial EmotionDetection - Gitee.com](https://gitee.com/daetz_0/emotion_detection_client_server/tree/main/Tutorial/model)
+
++ best_model_CNN_GRAY_size48.ipynb
++ best_model_CNN_RGB_size96
++ best_model_CNN_RGB_size224
++ best_model_EffectiveV2_RGB_size224
+
+
+
+## 三、结果
+
+
+
+### 1、无预训练
+
+在这里不使用任何预训练的数据集或者模型结构，仅仅使用自己收集的数据集进行训练和微调
+
+#### 1)、卷积模型（GRAY+size48）
 
 ```bash
-git clone https://github.com/daetz-coder/emotion_detection_client_server.git
+Epoch 40/100
+23/23 [==============================] - ETA: 0s - loss: 2.9194 - accuracy: 0.4553
+Epoch 40: ReduceLROnPlateau reducing learning rate to 1.5625000742147677e-05.
+23/23 [==============================] - 1s 23ms/step - loss: 2.9194 - accuracy: 0.4553 - val_loss: 3.2149 - val_accuracy: 0.3722 - lr: 3.1250e-05
+Epoch 41/100
+23/23 [==============================] - 1s 23ms/step - loss: 2.9375 - accuracy: 0.4413 - val_loss: 3.2338 - val_accuracy: 0.3667 - lr: 1.5625e-05
+Epoch 42/100
+22/23 [===========================>..] - ETA: 0s - loss: 2.8755 - accuracy: 0.4659
+Epoch 42: ReduceLROnPlateau reducing learning rate to 7.812500371073838e-06.
+23/23 [==============================] - 1s 24ms/step - loss: 2.8805 - accuracy: 0.4637 - val_loss: 3.2164 - val_accuracy: 0.3833 - lr: 1.5625e-05
+Epoch 43/100
+23/23 [==============================] - 1s 24ms/step - loss: 2.8275 - accuracy: 0.4846 - val_loss: 3.2361 - val_accuracy: 0.3667 - lr: 7.8125e-06
+Epoch 44/100
+22/23 [===========================>..] - ETA: 0s - loss: 2.7978 - accuracy: 0.4787
+Epoch 44: ReduceLROnPlateau reducing learning rate to 3.906250185536919e-06.
+23/23 [==============================] - 1s 24ms/step - loss: 2.7997 - accuracy: 0.4777 - val_loss: 3.2567 - val_accuracy: 0.3611 - lr: 7.8125e-06
 ```
+
+
+
+![image-20241223222511357](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202412232225416.png)
+
+
+
+#### 2、卷积模型（RGB+size96）
+
+
+
+```bash
+Epoch 42/3000
+23/23 [==============================] - 1s 25ms/step - loss: 2.1134 - accuracy: 0.6006 - val_loss: 2.4665 - val_accuracy: 0.5000 - lr: 3.9063e-06
+Epoch 43/3000
+22/23 [===========================>..] - ETA: 0s - loss: 2.1313 - accuracy: 0.5824
+Epoch 43: ReduceLROnPlateau reducing learning rate to 1.9531250927684596e-06.
+23/23 [==============================] - 1s 24ms/step - loss: 2.1382 - accuracy: 0.5810 - val_loss: 2.4613 - val_accuracy: 0.5056 - lr: 3.9063e-06
+Epoch 44/3000
+23/23 [==============================] - 1s 24ms/step - loss: 2.1184 - accuracy: 0.5950 - val_loss: 2.4612 - val_accuracy: 0.5056 - lr: 1.9531e-06
+Epoch 45/3000
+22/23 [===========================>..] - ETA: 0s - loss: 2.1409 - accuracy: 0.5597
+Epoch 45: ReduceLROnPlateau reducing learning rate to 9.765625463842298e-07.
+23/23 [==============================] - 1s 23ms/step - loss: 2.1338 - accuracy: 0.5615 - val_loss: 2.4612 - val_accuracy: 0.5056 - lr: 1.9531e-06
+```
+
+![image-20241223222630714](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202412232226780.png)
+
+
+
+#### 3、卷积模型（RGB+size224）
+
+```bash
+Epoch 90/100
+23/23 [==============================] - 3s 111ms/step - loss: 2.2417 - accuracy: 0.9749 - val_loss: 4.3400 - val_accuracy: 0.5111 - lr: 3.9063e-06
+Epoch 91/100
+22/23 [===========================>..] - ETA: 0s - loss: 2.2400 - accuracy: 0.9759
+Epoch 91: ReduceLROnPlateau reducing learning rate to 1.9531250927684596e-06.
+23/23 [==============================] - 3s 112ms/step - loss: 2.2397 - accuracy: 0.9763 - val_loss: 4.3405 - val_accuracy: 0.5056 - lr: 3.9063e-06
+Epoch 92/100
+23/23 [==============================] - 3s 113ms/step - loss: 2.2288 - accuracy: 0.9874 - val_loss: 4.3479 - val_accuracy: 0.5056 - lr: 1.9531e-06
+Epoch 93/100
+23/23 [==============================] - ETA: 0s - loss: 2.2212 - accuracy: 0.9846
+Epoch 93: ReduceLROnPlateau reducing learning rate to 9.765625463842298e-07.
+23/23 [==============================] - 3s 115ms/step - loss: 2.2212 - accuracy: 0.9846 - val_loss: 4.3524 - val_accuracy: 0.5056 - lr: 1.9531e-06
+Epoch 94/100
+23/23 [==============================] - 3s 114ms/step - loss: 2.2349 - accuracy: 0.9791 - val_loss: 4.3532 - val_accuracy: 0.5056 - lr: 9.7656e-07
+Epoch 95/100
+23/23 [==============================] - ETA: 0s - loss: 2.2182 - accuracy: 0.9832
+Epoch 95: ReduceLROnPlateau reducing learning rate to 4.882812731921149e-07.
+23/23 [==============================] - 3s 117ms/step - loss: 2.2182 - accuracy: 0.9832 - val_loss: 4.3539 - val_accuracy: 0.5056 - lr: 9.7656e-07
+```
+
+![image-20241223222732866](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202412232227934.png)
+
+
+
+### 2、含预训练
+
+#### 4) EffectiveV2模型（RGB+size224）
+
+![image-20241223222900241](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202412232229595.png)
+
+![image-20241223222833220](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202412232228306.png)
+
+
+
+虽然表现的比之前好，但是出现了明显的过拟合的问题
+
+
+
+### 3、参数比较
+
+四种模型的完整权重可访问，权重文件需要放入`pth`文件夹下
+
++ https://gitee.com/daetz_0/emotion_detection_client_server/releases
+
++ [ best_model_CNN_Gray_size48.h5 ](https://gitee.com/daetz_0/emotion_detection_client_server/releases/download/model-weight-data-upload/best_model_CNN_Gray_size48.h5)
+
++ [ best_model_CNN_RGB_size96.h5 ](https://gitee.com/daetz_0/emotion_detection_client_server/releases/download/model-weight-data-upload/best_model_CNN_RGB_size96.h5)
+
++ https://pan.baidu.com/s/1TgOv-Eeojh62JPSAx6AeWw?pwd=2024
+
+从实验结果来看，参数越多模型的检测性能越好，但是随之而来的是复杂的计算量，参数量成倍提升，由于实时检测对延时的要求较高，需要自行权衡
+
+![image-20241223223409956](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202412232234037.png)
+
+
+
+
+
+## 四、使用
+
+### 1、用于训练
+
+[emotion_detection_client_server: Real-Time Facial EmotionDetection - Gitee.com](https://gitee.com/daetz_0/emotion_detection_client_server/tree/main/Tutorial/model)
+
++ best_model_CNN_GRAY_size48.ipynb
++ best_model_CNN_RGB_size96
++ best_model_CNN_RGB_size224
++ best_model_EffectiveV2_RGB_size224
+
+仅需要使用上述的内容，建议 tensorflow>=2.9.0 Python 3.8(ubuntu20.04) Cuda 11.2
 
 ```less
-emotion_detection_server_local:
-├── README.md
-└── v2.0
-    ├── README.md
-    ├── requirements.ipynb
-    ├── client
-    │   ├── app.py
-    │   └── requirements.txt
-    └── server
-        ├── app.py
-        ├── recognition.py
-        └── requirements.txt
+drwxr-xr-x  4 root root   46 Dec 23 22:41 ./
+drwxr-xr-x 13 root root 4096 Dec 23 22:39 ../
+drwxr-xr-x  9 root root  133 Dec 23 22:39 dataset/
+drwxr-xr-x  2 root root 4096 Dec 23 22:40 model/
+-rw-r--r-- 1 root root  187223 Dec 23 22:40 best_model_CNN_GRAY_size48.ipynb
+-rw-r--r-- 1 root root  270266 Dec 23 22:40 best_model_CNN_RGB_size224.ipynb
+-rw-r--r-- 1 root root  260946 Dec 23 22:40 best_model_CNN_RGB_size96.ipynb
+-rw-r--r-- 1 root root 1029572 Dec 23 22:40 best_model_EffectiveV2_RGB_size224.ipynb
 ```
 
-### **Installation Steps:**
 
-1.Navigate to the `v2.0` directory:
+
+### 2、用于检测
+
+对于上述的四种方法，我们分别提供四种不同的加载文件，分别使用下述内容，上传不同格式的图像
+
++ cv2.COLOR_BGR2GRAY
++ cv2.COLOR_BGR2RGB
++ cv2.resize(img_gray, (48, 48))
++ cv2.resize(image_rgb, (96, 96))
++ cv2.resize(image_rgb, (224, 224))
+
+关键部分代码如下,完整的内容可访问`EmotionDetection/modules`
+
+```python
+class EmotionClient(Demography):
+    """
+    情绪识别模型类
+    """
+
+    def __init__(self):
+        # 加载模型
+        self.model = load_model()
+        self.model_name = "Emotion"
+
+    def predict(self, img: np.ndarray) -> np.ndarray:
+        image_rgb = cv2.cvtColor(img[0], cv2.COLOR_BGR2RGB)
+        image_resized = cv2.resize(image_rgb, (224, 224))
+        # print(f"image_resized: {image_resized.shape}")
+        # 归一化图像数据（假设模型在 0-1 范围内训练）
+        image = np.expand_dims(image_resized, axis=0)
+        # print(f"image_batch: {image_batch.shape}")
+        # image_batch = image_batch.astype('float32') / 255.0
+
+        # 进行预测，避免使用 `model.predict` 以减少内存问题
+        emotion_predictions = self.model(image, training=False).numpy()[0, :]
+
+        return emotion_predictions
+
+
+def load_model() -> Sequential:
+    """
+    构建情绪识别模型，加载本地权重文件
+    """
+    model = Sequential()
+    num_classes = 7
+    input_shape = (224, 224, 3)  # 输入图像尺寸为224x224，RGB三通道
+
+    # 第一组卷积层
+    model.add(Conv2D(32, (3,3), activation="selu", input_shape=input_shape, padding='same'))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(Dropout(0.3))
+
+    # 第二组卷积层
+    model.add(Conv2D(64, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(64, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(Dropout(0.4))
+
+    # 第三组卷积层
+    model.add(Conv2D(128, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(128, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(Dropout(0.5))
+
+    # 第四组卷积层
+    model.add(Conv2D(256, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(256, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(Dropout(0.6))
+
+    # 第五组卷积层（可选，进一步增加复杂性）
+    model.add(Conv2D(512, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(512, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(Dropout(0.7))
+
+    # Flatten层
+    model.add(Flatten())
+
+    # 全连接层
+    model.add(Dense(512, activation='selu', kernel_regularizer=l2(0.01)))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
+
+    model.add(Dense(256, activation='selu', kernel_regularizer=l2(0.01)))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
+
+    # 输出层
+    model.add(Dense(num_classes, activation="softmax"))
+
+    # # 编译模型
+    # model.compile(optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+    # # 打印模型摘要
+    # model.summary()
+
+    # 加载本地权重文件
+    if os.path.exists(WEIGHTS_FILE_PATH):
+        model.load_weights(WEIGHTS_FILE_PATH)
+        logger.info(f"已加载权重文件：{WEIGHTS_FILE_PATH}")
+    else:
+        logger.error(f"未找到权重文件：{WEIGHTS_FILE_PATH}")
+        raise FileNotFoundError(f"未找到权重文件：{WEIGHTS_FILE_PATH}")
+
+    return model
 
 ```
-cd v2.0
-```
 
-2.Client Setup:
++ CNN_GRAY_size48.py
++ CNN_RGB_size96.py
+
++ CNN_RGB_size224.py
++ Emotion_EffectiveV2.py
+
+如果需要使用，请替换原`Emotion.py`的内容
+
+
+
+### 3、直接使用
 
 ```bash
-cd client
+git clone https://gitee.com/daetz_0/emotion_detection_client_server.git
+cd emotion_detection_client_server
 pip install -r requirements.txt
+python main.py
+# use the "q" exit
 ```
 
-3.Server Setup:
-
-```bash
-cd server
-pip install -r requirements.txt
-```
-
-**Note:**
-Complete dependencies on the server and their corresponding CUDA versions can be found in `requirements.ipynb`.
-
-## 三、Startup
-
-### 1、Client
-
-```bash
-# Navigate to the client directory
-cd v2.0/client/
-python app.py
-```
-
-### 2、Server
-
-```bash
-# Navigate to the server directory
-cd v2.0/server
-python app.py
-```
-
-**Default IP and Port:**
-
-- **IP:** `0.0.0.0`
-- **Port:** `5000`
-
-```bash
-2024-11-03 11:04:39.125776: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-11-03 11:04:39.553741: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
- * Serving Flask app 'app'
- * Debug mode: off
-WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://192.168.1.103:5000
-Press CTRL+C to quit
-```
-
-## 四、Features
-
-![image-20241103110829933](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202411031108193.png)
-
-### 1、Image Recognition
-
-![image-20241103110907672](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202411031109829.png)
-
-```bash
-2024-11-03 11:09:29.580677: I tensorflow/compiler/xla/stream_executor/cuda/cuda_dnn.cc:432] Loaded cuDNN version 8907
-2024-11-03 11:09:30.476590: I tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:606] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
-100.68.1.119 - - [03/Nov/2024 11:09:30] "POST /analyze_image HTTP/1.1" 200 -
-2024-11-03 11:09:30,495 - INFO - 100.68.1.119 - - [03/Nov/2024 11:09:30] "POST /analyze_image HTTP/1.1" 200 -
-```
-
-![image-20241103111016930](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202411031110631.png)
-
-### 2、Video Recognition
-
-![image-20241103111124756](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202411031111899.png)
-
-```bash
-Processing Video:  26%|█████▍               | 77/300 [00:20<01:12,  3.08frame/s]
-```
-
-### 3、Online Recognition
-
-![image-20241103111433014](https://daetz-image.oss-cn-hangzhou.aliyuncs.com/img/202411031114531.png)
-
-```bash
-100.68.1.119 - - [03/Nov/2024 11:14:38] "POST /analyze_online HTTP/1.1" 200 -
-INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:38] "POST /analyze_online HTTP/1.1" 200 -
-100.68.1.119 - - [03/Nov/2024 11:14:39] "POST /analyze_online HTTP/1.1" 200 -
-INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:39] "POST /analyze_online HTTP/1.1" 200 -
-100.68.1.119 - - [03/Nov/2024 11:14:39] "POST /analyze_online HTTP/1.1" 200 -
-INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:39] "POST /analyze_online HTTP/1.1" 200 -
-100.68.1.119 - - [03/Nov/2024 11:14:39] "POST /analyze_online HTTP/1.1" 200 -
-INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:39] "POST /analyze_online HTTP/1.1" 200 -
-100.68.1.119 - - [03/Nov/2024 11:14:40] "POST /analyze_online HTTP/1.1" 200 -
-INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:40] "POST /analyze_online HTTP/1.1" 200 -
-100.68.1.119 - - [03/Nov/2024 11:14:40] "POST /analyze_online HTTP/1.1" 200 -
-INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:40] "POST /analyze_online HTTP/1.1" 200 -
-100.68.1.119 - - [03/Nov/2024 11:14:40] "POST /analyze_online HTTP/1.1" 200 -
-INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:40] "POST /analyze_online HTTP/1.1" 200 -
-100.68.1.119 - - [03/Nov/2024 11:14:41] "POST /analyze_online HTTP/1.1" 200 -
-INFO:werkzeug:100.68.1.119 - - [03/Nov/2024 11:14:41] "POST /analyze_online HTTP/1.1" 200 -
-```
-
-## 五、Summary
-
-*This project involves a client-server architecture where lightweight operations are handled locally on a Windows machine (client), and more complex computations are loaded to a cloud-based Ubuntu server (server). The setup includes cloning the repository, installing necessary dependencies for both client and server, and starting the respective applications. The functionalities supported include image recognition, video recognition, and online recognition, each with corresponding logs demonstrating their operation.*
 
 
 
-# 2024 12/21 新增
+
+## 五、参考链接
 
 
 
-如果仅仅在本地使用，不希望使用服务器，可以直接使用`dev`文件夹的内容
++ [GitHub - opencv/opencv: Open Source Computer Vision Library](https://github.com/opencv/opencv)
 
-注意：需要使用下述命令安装依赖
++ [GitHub - serengil/deepface: A Lightweight Face Recognition and Facial Attribute Analysis](https://github.com/serengil/deepface)
++ [Facial Emotion Recognition (kaggle.com)](https://www.kaggle.com/code/gauravsharma99/facial-emotion-recognition/notebook)
++ [Facial Expression Recognition(FER)Challenge (kaggle.com)](https://www.kaggle.com/datasets/ashishpatel26/facial-expression-recognitionferchallenge)
 
-```bash
-pip install -r requirements.txt
-```
-
-+ [realtime.py](realtime.py)   表示包含平滑处理的实时检测文件
-+ [simple.py](simple.py) 表示简单的实时处理文件
-+ [simple_age_gender.py](simple_age_gender.py)  表示额外增加了age和gender的实验
-
++ [📈 EfficientNetV2 😃💡📊 Emotion Recognition 🤖 (kaggle.com)](https://www.kaggle.com/code/guanlintao/efficientnetv2-emotion-recognition)
++ [Facial Emotion Recognition Image Dataset (kaggle.com)](https://www.kaggle.com/datasets/sujaykapadnis/emotion-recognition-dataset)

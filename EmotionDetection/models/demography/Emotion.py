@@ -2,7 +2,7 @@
 import numpy as np
 import cv2
 import os
-import tensorflow as tf
+
 # project dependencies
 from EmotionDetection.commons import package_utils, weight_utils
 from EmotionDetection.models.Demography import Demography
@@ -28,8 +28,7 @@ else:
         Dense,
         Dropout,
         BatchNormalization,
-        MaxPool2D,
-        GlobalAveragePooling2D
+        MaxPool2D
     )
     from tensorflow.keras.regularizers import l2
     from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -42,7 +41,7 @@ labels = ["angry", "disgust", "fear", "happy", "sad", "surprise", "neutral"]
 logger = Logger()
 
 # 权重文件的本地路径
-WEIGHTS_FILE_PATH = "./pth/best_model_EffectiveV2_RGB_size224.h5"
+WEIGHTS_FILE_PATH = "./pth/best_model_CNN_RGB_size224.h5"
 
 # pylint: disable=line-too-long, disable=too-few-public-methods
 
@@ -63,6 +62,8 @@ class EmotionClient(Demography):
         # 归一化图像数据（假设模型在 0-1 范围内训练）
         image = np.expand_dims(image_resized, axis=0)
         # print(f"image_batch: {image_batch.shape}")
+        # image_batch = image_batch.astype('float32') / 255.0
+
         # 进行预测，避免使用 `model.predict` 以减少内存问题
         emotion_predictions = self.model(image, training=False).numpy()[0, :]
 
@@ -73,28 +74,70 @@ def load_model() -> Sequential:
     """
     构建情绪识别模型，加载本地权重文件
     """
-    # 加载预训练模型（不包括顶层）
-    base_model = tf.keras.applications.ConvNeXtTiny(input_shape=(224, 224, 3), include_top=False, weights='imagenet')
-
-    # 冻结基础模型的层，防止它们在推理时被训练
-    base_model.trainable = True  # 可以取消冻结，若你希望在推理过程中做微调
-    fine_tune_at = len(base_model.layers) - 20  # 选择冻结的层
-    for layer in base_model.layers[:fine_tune_at]:
-        layer.trainable = False
-
-    # 创建新模型
     model = Sequential()
-    model.add(base_model)
-    model.add(GlobalAveragePooling2D())  # 使用全局平均池化代替Flatten
-    model.add(BatchNormalization())  # 添加批量归一化层
-    model.add(Dense(128, activation='relu'))  # 增加模型容量
-    model.add(Dropout(0.3))  # Dropout层，减少过拟合
-    model.add(Dense(7, activation='softmax'))  # 7个类别的输出层
+    num_classes = 7
+    input_shape = (224, 224, 3)  # 输入图像尺寸为224x224，RGB三通道
 
-    # 打印模型结构
-    model.summary()
+    # 第一组卷积层
+    model.add(Conv2D(32, (3,3), activation="selu", input_shape=input_shape, padding='same'))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(Dropout(0.3))
 
-    # 加载预训练权重
+    # 第二组卷积层
+    model.add(Conv2D(64, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(64, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(Dropout(0.4))
+
+    # 第三组卷积层
+    model.add(Conv2D(128, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(128, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(Dropout(0.5))
+
+    # 第四组卷积层
+    model.add(Conv2D(256, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(256, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(Dropout(0.6))
+
+    # 第五组卷积层（可选，进一步增加复杂性）
+    model.add(Conv2D(512, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(512, (3,3), activation="selu", padding='same'))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(Dropout(0.7))
+
+    # Flatten层
+    model.add(Flatten())
+
+    # 全连接层
+    model.add(Dense(512, activation='selu', kernel_regularizer=l2(0.01)))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
+
+    model.add(Dense(256, activation='selu', kernel_regularizer=l2(0.01)))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
+
+    # 输出层
+    model.add(Dense(num_classes, activation="softmax"))
+
+    # # 编译模型
+    # model.compile(optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+    # # 打印模型摘要
+    # model.summary()
+
+    # 加载本地权重文件
     if os.path.exists(WEIGHTS_FILE_PATH):
         model.load_weights(WEIGHTS_FILE_PATH)
         logger.info(f"已加载权重文件：{WEIGHTS_FILE_PATH}")
@@ -102,5 +145,4 @@ def load_model() -> Sequential:
         logger.error(f"未找到权重文件：{WEIGHTS_FILE_PATH}")
         raise FileNotFoundError(f"未找到权重文件：{WEIGHTS_FILE_PATH}")
 
-    # 返回模型，不进行编译
     return model
